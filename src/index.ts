@@ -27,7 +27,7 @@ app.get('/health', (req, res) => {
 })
 
 Controllers.then((controllers) => {
-  app.use('/api', controllers.ElasticsearchReadRouter)
+  app.use('/elasticsearch', controllers.ElasticsearchReadRouter)
 })
 
 app.listen(port, () => {

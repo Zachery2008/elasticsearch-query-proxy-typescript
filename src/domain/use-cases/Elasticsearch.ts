@@ -61,18 +61,14 @@ export class Elasticsearch {
    * @param query the query to execute
    * @return a successful Result with the query results
    */
-  async getQuery(index: string, query: string) {
+  async getQuery(index: string, query: any) {
     try {
       const results = await this._client.search({
         index,
-        body: {
-          query: {
-            match: {
-              _all: query,
-            },
-          },
-        },
+        body: query,
         size: 10,
+        allow_no_indices: false,
+        timeout: '10s',
       })
       return new Result<any>(true, undefined, results)
     }

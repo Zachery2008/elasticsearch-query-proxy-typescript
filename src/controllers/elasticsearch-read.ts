@@ -8,11 +8,11 @@ export const ElasticsearchReadRouter = Promise.all([UseCases]).then(([usecases])
     .get(async (_req, res) => {
       // Get all indices
       const results = await usecases.Elasticsearch.getIndices()
-
       if (results.isFailure) {
         res.status(400).send(results.errorValue())
         return
       }
+
       res.status(200).json(results.getValue())
     })
 
@@ -20,23 +20,29 @@ export const ElasticsearchReadRouter = Promise.all([UseCases]).then(([usecases])
   .get(async (_req, res) => {
     // Get index metadata by name
     const results = await usecases.Elasticsearch.getIndex(_req.params.index)
-
     if (results.isFailure) {
       res.status(400).send(results.errorValue())
       return
     }
+
     res.status(200).json(results.getValue())
   })
 
   router.route('/indices/:index/queries')
   .get(async (_req, res) => {
     // Get the results of the query
-    const results = await usecases.Elasticsearch.getQuery(_req.params.index, _req.body.query)
+    const indexResults = await usecases.Elasticsearch.getIndex(_req.params.index)
+    if (indexResults.isFailure) {
+      res.status(400).send(indexResults.errorValue())
+      return
+    }
 
+    const results = await usecases.Elasticsearch.getQuery(_req.params.index, _req.body)
     if (results.isFailure) {
       res.status(400).send(results.errorValue())
       return
     }
+
     res.status(200).json(results.getValue())
   })
 
