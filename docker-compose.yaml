@@ -1,0 +1,23 @@
+version: "3.9"
+services:
+  redis:
+    image: redis
+    networks:
+      - elastic
+
+  es-service:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    env_file:
+      - '.env'
+    ports:
+      - 3000:3000
+    networks:
+      - elastic
+    depends_on:
+      - redis
+  
+networks:
+  elastic:
+    external: true

@@ -1,5 +1,5 @@
 import { Client } from '@elastic/elasticsearch'
-import { Logger } from '../../utils/logger'
+import { Logger } from '../../core/Logger'
 import { Result } from '../../core/Result'
 import { UseCaseErrors } from "./UseCaseErrors"
 import { UseCaseError } from '../../core/UseCaseError'
@@ -13,7 +13,7 @@ export class Elasticsearch {
 
   constructor() {
     this._client = new Client({
-      node: 'http://localhost:9200',
+      node: `${process.env.ELASTIC_URL}:${process.env.ELASTIC_PORT}`,
     })
   }
 

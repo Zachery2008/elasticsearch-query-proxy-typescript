@@ -38,7 +38,7 @@ services:
 
 networks:
   elastic:
-    driver: bridge
+    external: true
 
 volumes:
   elasticsearch-data:

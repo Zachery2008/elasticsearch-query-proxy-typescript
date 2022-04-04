@@ -1,4 +1,4 @@
-import { Elasticsearch } from "./elasticsearch"
+import { Elasticsearch } from "./Elasticsearch"
 
 // Initialize all use cases
 export const UseCases = Promise.all([]).then(async () => {
